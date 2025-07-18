@@ -1,10 +1,7 @@
 {
   "functions": {
     "api/**/*.[jt]s": {
-      "runtime": "vercel-deno@3.1.1",
-      "env": {
-        "DENO_DIR": "/tmp"
-      }
+      "runtime": "vercel-deno@3.1.1"
     }
   }
 }
