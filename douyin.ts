@@ -57,8 +57,19 @@ async function doGet(url: string): Promise<Response> {
     "User-Agent",
     "Mozilla/5.0 (Linux; Android 11; SAMSUNG SM-G973U) AppleWebKit/537.36 (KHTML, like Gecko) SamsungBrowser/14.2 Chrome/87.0.4280.141 Mobile Safari/537.36",
   );
+  // 允许跨域
+  headers.set("Access-Control-Allow-Origin", "*");
   const resp = await fetch(url, { method: "GET", headers });
-  return resp;
+  // 复制原响应体并设置CORS header
+  const text = await resp.text();
+  return new Response(text, {
+    status: resp.status,
+    statusText: resp.statusText,
+    headers: {
+      ...Object.fromEntries(resp.headers.entries()),
+      "Access-Control-Allow-Origin": "*",
+    },
+  });
 }
 
 async function parseImgList(body: string):Promise<string[]> {
